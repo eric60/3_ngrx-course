@@ -19,7 +19,10 @@ import * as fromAuth from './reducers';
         MatInputModule,
         MatButtonModule,
         RouterModule.forChild([{path: '', component: LoginComponent}]),
-        StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducers, { metaReducers: fromAuth.metaReducers }), // initialize authFeature data with auth key and reducer to load the data  {auth:{}}
+        StoreModule.forFeature(
+          fromAuth.authFeatureKey,
+          fromAuth.reducers
+        ), // initialize authFeature data with auth key and reducer to load the data  {auth:{}}
 
     ],
     declarations: [LoginComponent],
