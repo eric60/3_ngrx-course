@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {NgModule, isDevMode} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -25,6 +25,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 const routes: Routes = [
   {
+    // lazily load courses module to reduce application bundle size
     path: 'courses',
     loadChildren: () => import('./courses/courses.module').then(m => m.CoursesModule)
   },
@@ -48,6 +49,8 @@ const routes: Routes = [
         MatProgressSpinnerModule,
         MatListModule,
         MatToolbarModule,
-        AuthModule.forRoot()], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        AuthModule.forRoot(), // eagerly load authmodule
+        StoreModule.forRoot({}, {}),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {
 }
