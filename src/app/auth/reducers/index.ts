@@ -9,10 +9,10 @@ import {
 
 export const authFeatureKey = 'auth';
 
-export interface State {
+export interface AppGlobalState {
 
 }
 
-export const reducers: ActionReducerMap<State> = {
+export const reducers: ActionReducerMap<AppGlobalState> = {
 
 };

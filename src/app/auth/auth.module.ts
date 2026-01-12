@@ -22,7 +22,7 @@ import * as fromAuth from './reducers';
         StoreModule.forFeature(
           fromAuth.authFeatureKey,
           fromAuth.reducers
-        ), // initialize authFeature data with auth key and reducer to load the data  {auth:{}}
+        ), // initialize authFeature data with auth feature key and reducer value to load the data  {auth:{}}
 
     ],
     declarations: [LoginComponent],
