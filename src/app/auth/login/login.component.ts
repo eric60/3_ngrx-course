@@ -8,6 +8,7 @@ import {tap} from "rxjs/operators";
 import {noop} from "rxjs";
 import {Router} from "@angular/router";
 import {AppGlobalState} from "../reducers";
+import {loginActionCreator} from "../auth.actions";
 
 @Component({
   selector: 'login',
@@ -65,12 +66,14 @@ export class LoginComponent implements OnInit {
            */
           // this.store.subscribe() can subscribe to store to read data
           // save user profile in global store
+          this.store.dispatch(loginActionCreator({user: user}))
+        /*  old way without login actioncreator function
           this.store.dispatch({
             type: '[Login Component] Login Action',
             payload: {
               userProfile: user
             }
-          })
+          })*/
 
           this.router.navigateByUrl("/courses")
         })
