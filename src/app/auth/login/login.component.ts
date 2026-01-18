@@ -7,8 +7,8 @@ import {AuthService} from "../auth.service";
 import {tap} from "rxjs/operators";
 import {noop} from "rxjs";
 import {Router} from "@angular/router";
-import {AppGlobalState} from "../reducers";
-import {loginActionCreator} from "../auth.actions";
+import {AuthState} from "../reducers";
+import {loginAction} from "../auth.actions";
 
 @Component({
   selector: 'login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       private fb:FormBuilder,
       private authService: AuthService,
       private router:Router,
-      private store: Store<AppGlobalState>) {
+      private store: Store<AuthState>) {
 
       this.form = fb.group({
           email: ['test@angular-university.io', [Validators.required]],
@@ -58,15 +58,15 @@ export class LoginComponent implements OnInit {
             * indirection important so that login component not tightly coupled with other parts of the application -- so login component unaware of separate compoents course-card-list or course-dialog that also dispatch actions
             *
 
-          * What is Action?
-            * Action is just plain js object(not json format) send to store, to trigger some modification of store type to create a new version of its internal state
+          * What is an Action?
+            * Action is just plain js object(not json format with quotes "") send to store, to trigger some modification of store type to create a new version of its internal state
             * each action has a string type & optional payload to update the internal state
             *
           *.
            */
           // this.store.subscribe() can subscribe to store to read data
           // save user profile in global store
-          this.store.dispatch(loginActionCreator({user: user}))
+          this.store.dispatch(loginAction({user: user}))
         /*  old way without login actioncreator function
           this.store.dispatch({
             type: '[Login Component] Login Action',
