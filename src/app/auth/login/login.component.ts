@@ -37,19 +37,18 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-
     const val = this.form.value;
     const email = val.email;
     const pass = val.password
 
-
     this.authService.login(email, pass)
       .pipe(
         tap((user) => {
+          // [Step-by-Step] Step 1: login() function receive login payload from backend containing user profile.
           console.log("login success for user: ", user);
 
           /*
-          * what is store?
+          * what is a store?
             * store is an observable that emits values of the global state
             * The ONLY way to write data in store is the dispatch method
 
@@ -64,9 +63,16 @@ export class LoginComponent implements OnInit {
             *
           *.
            */
-          // this.store.subscribe() can subscribe to store to read data
-          // save user profile in global store
-          this.store.dispatch(loginAction({user: user}))
+          // [Step-by-Step] Step 2: Components dispatch the newLoginAction. Each component does not modify the state directly, action is just plain js object containing the data and type, the type tell the store what to do with the action and call a reducer function plain js function that
+
+          // this.store.subscribe() -- you can can also subscribe to store to read data
+          // or in this case -- save user profile in global store by dispatching
+          const newLoginAction = loginAction({user: user})
+
+          // console.log("new login action: ", newLoginAction)
+          // debugger; // stop code execution here
+
+          this.store.dispatch(newLoginAction)
         /*  old way without login actioncreator function
           this.store.dispatch({
             type: '[Login Component] Login Action',

@@ -24,10 +24,6 @@ export const initialAuthState: AuthState = {
   user: undefined
 }
 
-export const reducers: ActionReducerMap<AuthState> = {
-
-};
-
 /*
 // reducer is just a plain js function pass to the store so that the store knows **how to react to a given action**
 
@@ -38,10 +34,16 @@ output: return new state of store, does NOT modify the state of store directly, 
 // function authReducer(state, action): AuthState {
 // }
 
+
+// [Step-by-Step] Step 3: Requirement: In response to a login action, the reducer should save the user profile in state
 export const authReducer = createReducer(
   initialAuthState,
   on(AuthActions.loginAction, (state, action) => {
     // output on loginAction, output = what is the new value of the state
+
+    // console.log("calling login authReducer")
+    // debugger;
+    
     return {
       user: action.user // return plain js object of the new VERSION of the state
     }

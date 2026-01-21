@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import {AuthService} from "./auth.service";
 import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from './reducers';
+import {authFeatureKey, authReducer} from "./reducers";
 
 @NgModule({
     imports: [
@@ -20,8 +21,8 @@ import * as fromAuth from './reducers';
         MatButtonModule,
         RouterModule.forChild([{path: '', component: LoginComponent}]),
         StoreModule.forFeature(
-          fromAuth.authFeatureKey,
-          fromAuth.reducers
+          authFeatureKey,
+          authReducer
         ), // initialize authFeature data with auth feature key and reducer value to load the data  {auth:{}}
 
     ],
