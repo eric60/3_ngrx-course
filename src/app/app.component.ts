@@ -3,6 +3,8 @@ import {select, Store} from "@ngrx/store";
 import {Observable} from "rxjs";
 import {map} from 'rxjs/operators';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
+import {AuthState} from "./auth/reducers";
+import {GlobalAppState} from "./reducers";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +15,12 @@ export class AppComponent implements OnInit {
 
     loading = true;
 
-    constructor(private router: Router) {
+    // use reactive observable instead of plain boolean
+    isLoggedIn$: Observable<boolean>
+    isLoggedOut$: Observable<boolean>
+
+    constructor(private router: Router, private store: Store<GlobalAppState>) {
+      // challenge yourself - try out on your own first!, show/hide login logout buttons based on store data
 
     }
 
@@ -37,6 +44,16 @@ export class AppComponent implements OnInit {
           }
         }
       });
+
+      this.store.subscribe(state => console.log("Store value: ", state))
+
+      this.isLoggedIn$ = this.store.pipe(
+        map(state => !!state["auth"].user) // true if exists
+      )
+
+      this.isLoggedOut$ = this.store.pipe(
+        map(state => !state["auth"].user) // false if exists
+      )
 
     }
 

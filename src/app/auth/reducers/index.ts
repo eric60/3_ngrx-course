@@ -39,11 +39,11 @@ output: return new state of store, does NOT modify the state of store directly, 
 export const authReducer = createReducer(
   initialAuthState,
   on(AuthActions.loginAction, (state, action) => {
-    // output on loginAction, output = what is the new value of the state
+    // output on loginAction = what is the new value of the state?
 
     // console.log("calling login authReducer")
     // debugger;
-    
+
     return {
       user: action.user // return plain js object of the new VERSION of the state
     }
@@ -51,6 +51,7 @@ export const authReducer = createReducer(
 )
 
 /* reducer comes from reduce function, which is a higher order function that takes in another function as input
+
 array.reduce((accumulator, currentValue, index, array) => {
   return newAccumulator;
 }, initialValue);
