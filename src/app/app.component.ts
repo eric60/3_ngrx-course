@@ -5,6 +5,7 @@ import {map} from 'rxjs/operators';
 import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router} from '@angular/router';
 import {AuthState} from "./auth/reducers";
 import {GlobalAppState} from "./reducers";
+import {isLoggedIn, isLoggedOut} from "./auth/auth.selectors";
 
 @Component({
   selector: 'app-root',
@@ -48,11 +49,20 @@ export class AppComponent implements OnInit {
       this.store.subscribe(state => console.log("Store value: ", state))
 
       this.isLoggedIn$ = this.store.pipe(
-        map(state => !!state["auth"].user) // true if exists
+        //  select(state => !!state["auth"].user)
+        // Optimize by removing duplicate calculations by replacing plain mapping function with MemoizedSelector function
+        select(isLoggedIn) // true if exists
+        // actions to crud course --> with each action that is dispatched --> new value emitted by the store<GlobalAppState> observable --> with each new value emitted by the observable --> value for isLoggedIn$ true is recalculated  EVERY time a new action is dispatched and then store emits new GlobalAppState value e.g. 10 times
+        // e.g. distinctUntilChanged()
+        // need duplicate elimination functionality to avoid having isLoggedIn value emitted over ane over to the view, only want isLoggedIn$ to emit values if auth state has changed since last time
+        // does BOTH mapping of values & elimination of duplicates = select operator in ngrx, not part of rxjs operators
+        // mapFn in select operator is a pure map function: takes input and maps it to an output
+        // optimization: only perform mapping when input changes, otherwise don't repeat recalculation of the derived value of isLoggedIn$, instead take previously calculated from in-memory cache
+        // concept of mapping function with memory = selector
       )
 
       this.isLoggedOut$ = this.store.pipe(
-        map(state => !state["auth"].user) // false if exists
+        map(isLoggedOut) // false if exists
       )
 
     }

@@ -45,6 +45,12 @@ export class LoginComponent implements OnInit {
       .pipe(
         tap((user) => {
           // [Step-by-Step] Step 1: login() function receive login payload from backend containing user profile.
+          /*
+          ngrx store dev tools first 2 actions explained
+          1. @ngrx/store/init:  initial action that is dispatched automatically at app startup to initialize the default values of our store
+          2. @ngrx/store/update-reducers: whenever we add new feature modules to our app, this update-reducers action is triggerred.
+          actions useful if we want to rigger something based on one of these 2 initialization actions
+           */
           console.log("login success for user: ", user);
 
           /*
