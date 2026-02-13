@@ -8,7 +8,7 @@ import {User} from "./model/user.model";
 // Standardized format for actions: [Source of Action] event or command the action corresponds to
 export const loginAction = createAction(
   "[Login Page] User Login",
-        props<{user: User}>() // ngrx utility function props(), no arguments, just 1 generic param for the TYPE of the payload to have a typesafe payload. should be plain javascript object
+        props<{user: User}>() // ngrx utility function props() has no arguments and just has 1 generic param <T> for the TYPE of the payload to have a typesafe payload. should be plain javascript object
   // export declare function props<P extends SafeProps, SafeProps = NotAllowedInPropsCheck<P>>(): ActionCreatorProps<P>;
 )
 // login is NOT the type definition of class, it is action creator function that we call in order to create an action

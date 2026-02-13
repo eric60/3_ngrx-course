@@ -1,4 +1,4 @@
-import { isDevMode } from '@angular/core';
+import {isDevMode} from '@angular/core';
 import {
   ActionReducer,
   ActionReducerMap,
@@ -25,7 +25,10 @@ export const initialAuthState: AuthState = {
 }
 
 /*
+// reducer definition
 // reducer is just a plain js function pass to the store so that the store knows **how to react to a given action**
+
+// reducer function ALWAYS returns a new copy of the state (new instance of the authstate) and NEVER mutates the existing state --> otherwise the time traveling debugger / diff showing previous versions of state (v1, v2, etc) would not work
 
 input: action that was just dispatched to the sto
 output: return new state of store, does NOT modify the state of store directly, calculates new version of the state based on the previous state the action that just got dispatched
@@ -46,6 +49,12 @@ export const authReducer = createReducer(
 
     return {
       user: action.user // return plain js object of the new VERSION of the state
+    }
+  }),
+  on(AuthActions.logoutAction, (state, action) => {
+    return {
+      user: undefined // logout function ===> logout action ===> logout reducer ===> update auth property in GlobalAppState
+      //
     }
   })
 )
