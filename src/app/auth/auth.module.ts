@@ -25,6 +25,7 @@ import {AuthGuard} from "./auth.guard";
           authFeatureKey,
           authReducer
         ), // initialize authFeature data with auth feature key and reducer value to load the data  {auth:{}}
+        EffectsModule.forFeature([]) // list of side effects implemented as injectable services. e.g. side effect where after user logs in, the auth state is not just populated in store but as side effect persisted in the local browser storage/backend service
 
     ],
     declarations: [LoginComponent],

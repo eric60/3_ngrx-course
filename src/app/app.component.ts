@@ -73,7 +73,7 @@ export class AppComponent implements OnInit {
 
     }
 
-    // dispatch logout action
+    // Dispatch the Logout Action Type
   // Action ===> Effect ===> Service/API call  ===> New Action ===> Reducer ===> Store
   // Actions trigger the reducers to change the values in the state
     logout() {
