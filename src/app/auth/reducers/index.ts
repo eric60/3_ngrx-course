@@ -53,7 +53,7 @@ export const authReducer = createReducer(
   }),
   on(AuthActions.logoutAction, (state, action) => {
     return {
-      user: undefined // logout function ===> logout action ===> logout reducer ===> update auth property in GlobalAppState
+      user: undefined // logout function => logout action => logout reducer => state update auth property in GlobalAppState
       //
     }
   })

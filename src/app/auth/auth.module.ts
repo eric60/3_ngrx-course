@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from './reducers';
 import {authFeatureKey, authReducer} from "./reducers";
 import {AuthGuard} from "./auth.guard";
+import {AuthEffects} from "./auth.effects";
 
 @NgModule({
     imports: [
@@ -25,7 +26,7 @@ import {AuthGuard} from "./auth.guard";
           authFeatureKey,
           authReducer
         ), // initialize authFeature data with auth feature key and reducer value to load the data  {auth:{}}
-        EffectsModule.forFeature([]) // list of side effects implemented as injectable services. e.g. side effect where after user logs in, the auth state is not just populated in store but as side effect persisted in the local browser storage/backend service
+        EffectsModule.forFeature([AuthEffects]) // list of side effects implemented as injectable services. e.g. side effect where after user logs in, the auth state is not just populated in store but as side effect persisted in the local browser storage/backend service
 
     ],
     declarations: [LoginComponent],

@@ -74,7 +74,7 @@ export class AppComponent implements OnInit {
     }
 
     // Dispatch the Logout Action Type
-  // Action ===> Effect ===> Service/API call  ===> New Action ===> Reducer ===> Store
+  // Action => Effect => Service/API call  => New Action => Reducer => Store
   // Actions trigger the reducers to change the values in the state
     logout() {
       this.store.dispatch(logoutAction()) // dispatching action by itself will not modify the data inside the store --> need to create reducer on(that action type)
