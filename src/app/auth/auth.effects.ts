@@ -20,10 +20,11 @@ export class AuthEffects {
       .pipe(
         ofType(AuthActions.loginAction), // filtering for just loginAction
         tap(action => {
-          localStorage.setItem('user', JSON.stringify(action.user));
+          localStorage.setItem('user', JSON.stringify(action.user)); // type safe can access action.user object instead of action['user']
         })
       );
-  }, {dispatch: false}) // very important to have config dispatch false else create infinite loop since saving storage would dispatch new action that would then trigger this effect ofType loginAction over and over again
+  }, {dispatch: false}) // very important to have config dispatch = false else create infinite loop since saving storage would dispatch new action that would then trigger this effect ofType loginAction and save to storage and over and over again
+  // pros of createEffect: angular will re-create the login$ if any issues, and don't need to manually subscribe -- it is automatically registered to respond on loginActions
 
   constructor(private $actions: Actions) {
 
