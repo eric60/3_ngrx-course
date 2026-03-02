@@ -6,7 +6,7 @@ import {NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Route
 import {AuthState} from "./auth/reducers";
 import {GlobalAppState} from "./reducers";
 import {isLoggedIn, isLoggedOut} from "./auth/auth.selectors";
-import {logoutAction} from "./auth/auth.actions";
+import {loginAction, logoutAction} from "./auth/auth.actions";
 
 @Component({
   selector: 'app-root',
@@ -26,6 +26,15 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
+
+      // check for user profile on app load to trigger loginAction to persist user profile
+      const userProfile = localStorage.getItem('user')
+
+      if (userProfile) {
+        // The JSON. parse() static method parses a JSON string, constructing the JavaScript value or object described by the string. An optional reviver function can be provided to perform a transformation on the resulting object before it is returned.// Params: // text – The string to parse as JSON.
+        this.store.dispatch(loginAction({user: JSON.parse(userProfile)}))
+      }
+
 
       this.router.events.subscribe(event  => {
         switch (true) {

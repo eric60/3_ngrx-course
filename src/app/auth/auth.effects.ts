@@ -2,6 +2,7 @@ import {Inject, Injectable} from "@angular/core";
 import {act, Actions, createEffect, ofType} from "@ngrx/effects";
 import {AuthActions} from "./action-types";
 import {tap} from "rxjs/operators";
+import {Router} from "@angular/router";
 
 // lesson 19: understanding ngrx effects - a simple example
 // recall write it down x3
@@ -15,18 +16,35 @@ import {tap} from "rxjs/operators";
 export class AuthEffects {
 
 // new way #3 is using createEffect
-  login$ = createEffect(() => {
+  loginSideEffect$ = createEffect(() => {
     return this.$actions
       .pipe(
         ofType(AuthActions.loginAction), // filtering for just loginAction
         tap(action => {
+          const user = JSON.stringify(action.user)
           localStorage.setItem('user', JSON.stringify(action.user)); // type safe can access action.user object instead of action['user']
+           console.log("in loginSideEffect localStorage.setItem('user): ", user)
         })
       );
-  }, {dispatch: false}) // very important to have config dispatch = false else create infinite loop since saving storage would dispatch new action that would then trigger this effect ofType loginAction and save to storage and over and over again
+  }, {dispatch: false})
+  // dispatch = Determines if the action emitted by the effect is ALSO dispatched to the store. If false, effect does not need to return type
+  // very important to have config dispatch = false else create infinite loop since saving storage would dispatch new action that would then trigger this effect ofType loginAction and save to storage and over and over again
   // pros of createEffect: angular will re-create the login$ if any issues, and don't need to manually subscribe -- it is automatically registered to respond on loginActions
 
-  constructor(private $actions: Actions) {
+  logoutSideEffect$ = createEffect(() => {
+    return this.$actions
+      .pipe(
+        ofType(AuthActions.logoutAction),
+        tap(action => {
+          localStorage.removeItem('user');
+
+          // avoid bad UX by redirecting to login page
+          this.router.navigateByUrl('/login');
+        })
+      )
+  }, {dispatch: false})
+
+  constructor(private $actions: Actions, private router: Router) {
 
     // new way #2 is to create a new observable that emits ONLY login actions
     /*const login$ =  this.$actions
