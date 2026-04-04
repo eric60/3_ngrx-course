@@ -32,7 +32,11 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.reload();
+      this.reload(); // problem: bad UX: constantly see loading screen, solution: Load just one time and fetch data from store rather than backend
+      /*
+      1. 1st step in ngrx is to define the actions first to implement handling of the course data ===> src/app/courses/courses.actions.ts
+      2. 2nd step in ngrx is
+       */
     }
 
   reload() {

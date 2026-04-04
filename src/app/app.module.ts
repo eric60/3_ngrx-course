@@ -51,7 +51,17 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(), // eagerly load the AuthModule
-    StoreModule.forRoot(reducers, {metaReducers}),
+    StoreModule.forRoot(reducers,
+      {
+        metaReducers, // The main difference is metaReducers are processed BEFORE the normal reducers are invoked e.g. login action ==> trigger metaReducer logger() first BEFORE the authReducer actions on(loginAction) are triggerred
+        runtimeChecks: {
+          strictStateImmutability: true, // this ensures state can never be accidentally mutated directly by app code like reducers state.user = action.user --> should always return new versions
+          // one example of a metareducer in previous version of ngrx, strictStateImmutability was implemented by a metareducer
+          strictActionImmutability: true, // no good reason for state to mutate action object, should always return since it would break time travelling debugger
+          strictActionSerializability: true, // ensures actions are serializable (e.g. runtime check fails since dates not serializable in js, so it needs to be string format
+          strictStateSerializability: true // ensures state is always serializable if need to store data locally like in chrome localstorage
+        }
+      }),
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
     EffectsModule.forRoot([]),
       StoreRouterConnectingModule.forRoot({

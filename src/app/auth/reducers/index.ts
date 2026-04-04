@@ -41,16 +41,25 @@ output: return new state of store, does NOT modify the state of store directly, 
 // [Step-by-Step] Step 3: Requirement: In response to a login action, the reducer should save the user profile in state
 export const authReducer = createReducer(
   initialAuthState,
+
   on(AuthActions.loginAction, (state, action) => {
     // output on loginAction = what is the new value of the state?
 
     // console.log("calling login authReducer")
     // debugger;
 
+    // incorrect way, mutate the original authstate directly which breaks time travelling debugger since cannot go back to a snapshot since the object was mutated,
+    // also breaks onPushChangeDetection which depends on new version of the object and not mutating the state directly
+    // ERROR TypeError: Cannot assign to read only property 'user' of object '[object Object]
+  /*  state.user = action.user
+    return state;*/
+
+    // correct way, don't mutate the original authstate, just return the new authstate
     return {
       user: action.user // return plain js object of the new VERSION of the state
     }
   }),
+
   on(AuthActions.logoutAction, (state, action) => {
     return {
       user: undefined // logout function => logout action => logout reducer => state update auth property in GlobalAppState
@@ -71,3 +80,4 @@ array.reduce((accumulator, currentValue, index, array) => {
  */
 const nums = [1, 2, 3, 4];
 const sum = nums.reduce((total, n, currIndexRef, currArrayRef) => total + n, 0);
+
