@@ -55,7 +55,7 @@ export class AppComponent implements OnInit {
         }
       });
 
-      this.store.subscribe(state => console.log("Store value: ", state))
+      this.store.subscribe(state => console.log("Current Store value: ", state))
 
       this.isLoggedIn$ = this.store.pipe(
         // READ Store Data Option 1

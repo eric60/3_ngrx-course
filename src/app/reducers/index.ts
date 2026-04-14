@@ -11,12 +11,12 @@ export const reducers: ActionReducerMap<GlobalAppState> = {
     router: routerReducer
 }
 
-// custom meta reducer
+// custom meta reducer logger
 export function logger(reducer: ActionReducer<any>): ActionReducer<any> {
   // just a plain reducer function for the Action
   return (state, action) => {
-    console.log("state before: ", state)
-    console.log("action: ", action)
+    console.log("custom meta reducer logger - state before action dispatched: ", state)
+    console.log("action dispatched: ", action)
 
     // return output of the regular application
     // continuing reducer chain to the next reducer
