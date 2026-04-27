@@ -54,7 +54,7 @@ export const authReducer = createReducer(
   /*  state.user = action.user
     return state;*/
 
-    // correct way, don't mutate the original authstate, just return the new authstate
+    // correct way, don't MUTATE the original authstate, just return the NEW authstate
     return {
       user: action.user // return plain js object of the new VERSION of the state
     }

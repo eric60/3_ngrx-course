@@ -15,7 +15,7 @@ export class CoursesEffects {
         // need to return a new action so use concatMap or mergeMap
         concatMap(action =>
           // only call backend once
-          this.courseHttpService.findAllCourses()
+          this.courseHttpService.findAllCourses()  // Problem: duplicate api request made by HomeComponent const courses$ = this.coursesHttpService.findAllCourses() ===> Solution: only 1 api request at application startup by refactoring HomeComponent to pull from the store after allCoursesLoaded action dispatched instead of using coursesHttpService
         ),
         map(courses => allCoursesLoaded({courses}))
       )

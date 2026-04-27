@@ -5,7 +5,7 @@ import {Course} from "./model/course";
 // use routerresolver to load data before showing the target screen (courses screen)
 export const loadAllCourses = createAction(
   // [Origin of the action] What happens with this action ---> This Action is More of a Command happening right now in the **present**, not an event that happened in the **past**
-  "[Courses Resolver] Load all courses"
+  "[Courses Resolver] Load all courses", props<{courses: Course[]}>()
 )
 
 
