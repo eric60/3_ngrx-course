@@ -51,6 +51,10 @@ const routes: Routes = [
     MatListModule,
     MatToolbarModule,
     AuthModule.forRoot(), // eagerly load the AuthModule
+
+    /*
+    Always keep forRoot at the root: Your main application module (AppModule) must still include StoreModule.forRoot({}), even if you are lazy-loading all of your feature states.
+     */
     StoreModule.forRoot(reducers,
       {
         metaReducers, // The main difference is metaReducers are processed BEFORE the normal reducers are invoked e.g. login action ==> trigger metaReducer logger() first BEFORE the authReducer actions on(loginAction) are triggerred
@@ -62,6 +66,7 @@ const routes: Routes = [
           strictStateSerializability: true // ensures state is always serializable if need to store data locally like in chrome localstorage
         }
       }),
+
     StoreDevtoolsModule.instrument({maxAge: 25, logOnly: !isDevMode()}),
     EffectsModule.forRoot([]),
       StoreRouterConnectingModule.forRoot({

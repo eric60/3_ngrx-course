@@ -66,7 +66,7 @@ export class CoursesResolver implements Resolve<any> {
 
         }),
         first(),
-        finalize(() => this.isLoading = false) // use finalize operator to ensure isLoading back to false after the observable completes
+        finalize(() => this.isLoading = false) // use finalize operator to ensure isLoading back to false AFTER the observable completes
       )
 
     // Problem: 2 instances of the [Course Resolver] Load All Courses Action because with router devtools, the store is emitting multiple times during router transition. Solution: add loading flag

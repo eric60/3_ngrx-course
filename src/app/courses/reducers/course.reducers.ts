@@ -33,24 +33,23 @@ utility function
 entity adapter is a helper function provided for CRUD operations.
  */
 export const adapter = createEntityAdapter<Course>();
-adapter.getSelectors();
-adapter.updateOne(null, null);
-adapter.removeOne(null, null)
-adapter.upsertOne(null, null)
+// adapter.getSelectors();
+// adapter.updateOne(null, null);
+// adapter.removeOne(null, null)
+// adapter.upsertOne(null, null)
 
 export const initialCoursesState = adapter.getInitialState() // each feature module needs to define it's initial state
 
 // reducer to save courses in the entity format - entities: {[key: number]: Course};
 export const coursesReducer = createReducer(
-
   initialCoursesState,
-
   // CourseActions.loadAllCourses action does not require any reducer logic -- this action simply triggers a side effect that loads data from the backend
-  on(CourseActions.allCoursesLoaded, (state, action) => {
+  on(CourseActions.allCoursesLoaded,
+    (state, action) => {
     // provide a new version of the CoursesState
-    // Before: have to convetr array of action.courses into dict {[key: number]: Course}
+    // Before: have to convert array of action.courses into dict {[key: number]: Course}
     // After: simply use adapter.addMany(new version of CoursesState, current version of CoursesState to use as basis of modifications). In investing and accounting, basis represents the original cost or value of an asset, used to calculate capital gains or losses when it is sold.
-    return adapter.addMany(action.courses, state);
+    return adapter.setAll(action.courses, state);
     // return {
     //   courses: state
     // }
@@ -75,3 +74,23 @@ export const courseReducer = createReducer(
     }
   })
 )
+
+
+/*
+// 1. Create the adapter
+const coursesAdapter = createEntityAdapter<Course>();
+const initialState = coursesAdapter.getInitialState();
+
+// 2. Use it in a slice
+const coursesSlice = createSlice({
+  name: 'courses',
+  initialState,
+  reducers: {
+    coursesLoaded(state, action: PayloadAction<Course[]>) {
+      // Use addAll to replace the collection with the payload
+      coursesAdapter.addAll(action.payload, state);
+    }
+  }
+});
+
+ */
