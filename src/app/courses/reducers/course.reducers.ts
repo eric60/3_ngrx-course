@@ -21,8 +21,8 @@ export interface CoursesState extends EntityState<Course> {
 }
 
 let state: CoursesState;
-console.log(state.entities)
-console.log(state.ids)
+// console.log(state.entities)
+// console.log(state.ids)
 
 /*
 ngrx entity makes it easy to store entities in state by providing
@@ -46,6 +46,7 @@ export const coursesReducer = createReducer(
   // CourseActions.loadAllCourses action does not require any reducer logic -- this action simply triggers a side effect that loads data from the backend
   on(CourseActions.allCoursesLoaded,
     (state, action) => {
+    console.log("in coursesReducer")
     // provide a new version of the CoursesState
     // Before: have to convert array of action.courses into dict {[key: number]: Course}
     // After: simply use adapter.addMany(new version of CoursesState, current version of CoursesState to use as basis of modifications). In investing and accounting, basis represents the original cost or value of an asset, used to calculate capital gains or losses when it is sold.

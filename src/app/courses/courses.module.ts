@@ -78,6 +78,7 @@ export const coursesRoutes: Routes = [
     // EffectsModule.forRoot(),
     EffectsModule.forFeature([CoursesEffects]),
     StoreModule.forFeature('courses', coursesReducer) // not necessary anymore and breaks code if you uncomment
+
     // Standalone Applications: If you are building an application without NgModules, use the provideState({ name: 'books', reducer: booksReducer }) function in your routing configuration instead.
     // In NgRx, StoreModule.forFeature registers a specific, localized slice of state and its corresponding reducers only when that specific feature module is loaded. It is primarily used to optimize large applications and modularize lazy-loaded routes
     // courses.module is lazy loaded feature module, define state key under "courses" key and reducer that takes care of the entity
