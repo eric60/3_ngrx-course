@@ -8,11 +8,15 @@ ngrx entity --> need to look up entities by id --> so convert Array to Map
 
 map of the keys of the entity i.e. the Course.id whose value is the entity corresponding to that key
 
+```
 export interface CoursesState {
-  entities: {[key: number]: Course};
   ids: number[]; // ids array used to order the Courses in their natural order.
+  entities: {[key: number]: Course};
+```
 
-   // this Entity format interface is the most powerful format to saving entities in the store, but not convenient to handle, so we need reducers to handle the conversion from Courses[] to entity format {[key: number]: Course}  ---> so we can use ngrx entity in a much more concise way by having the EXACT same properties as above by simply doing "extends EntityState<Course>"
+
+   // this Entity format interface is the most powerful format to saving entities in the store, but not convenient to handle,
+   so we need reducers to handle the conversion from Courses[] to entity format {[key: number]: Course}  ---> so we can use ngrx entity in a much more concise way by having the EXACT same properties as above by simply doing "extends EntityState<Course>"
 
   // we can combine entities and ids array to enable a helper function to convert entities to an array of courses in their natural course order e.g. by asc seqNo
 }

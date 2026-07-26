@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit() {
-      this.reload(); // problem: bad UX: constantly see loading screen, solution: Load just one time and fetch data from store rather than backend
+      this.reload(); // problem: bad UX: constantly see loading screen, solution: Load just one time and fetch data from store (with selector) rather than backend (with CoursesHttpService)
       /*
       Step 1
       1. 1st step in ngrx is always to define the actions first (loadAllCourses, coursesAllLoaded=createAction) to implement handling of the course data ===> src/app/courses/courses.actions.ts
@@ -41,30 +41,6 @@ export class HomeComponent implements OnInit {
     }
 
   reload() {
-
-    const courses$ = this.coursesHttpService.findAllCourses()
-      .pipe(
-        map(courses => courses.sort(compareCourses)),
-        shareReplay()
-      );
-
-    this.loading$ = courses$.pipe(map(courses => !!courses));
-
-    this.beginnerCourses$ = courses$
-      .pipe(
-        map(courses => courses.filter(course => course.category == 'BEGINNER'))
-      );
-
-
-    this.advancedCourses$ = courses$
-      .pipe(
-        map(courses => courses.filter(course => course.category == 'ADVANCED'))
-      );
-
-    this.promoTotal$ = courses$
-        .pipe(
-            map(courses => courses.filter(course => course.promo).length)
-        );
 
   }
 
